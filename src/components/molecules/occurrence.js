@@ -3,7 +3,7 @@ import { Card, Col, Row } from "react-bootstrap"
 
 export default function Occurrence(props) {
   return (
-    <Card className="ml-auto mr-auto" style={{ background: '#F5F5F5' }}>
+    <Card className="ml-auto mr-auto mb-2" style={{ background: '#F5F5F5', borderRadius: '10px' }}>
       <Card.Body>
         <Row>
           <h4>{props.title}</h4>

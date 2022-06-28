@@ -1,23 +1,35 @@
+import { useEffect, useState } from 'react'
 import Occurrence from '../components/molecules/occurrence'
 
 export default function Home(props) {
+  let [occurrences, setOccurrences] = useState([])
+    
+  useEffect(() => {
+    setOccurrences(props.data)
+  },[props])
+  
   return (
     <>
-      <Occurrence 
-        title={'Roubaram meu celular'}
-        description={'Enquanto eu estava andando próximo ao terminal do circular, apareceram 2 indivíduos e levaram meu celular'}
-        shift={'Noturno'}
-        location= {'IMD'}
-      />
+      {
+        occurrences.map((occurrence, key) => (
+          <Occurrence            
+            key={key}
+            title={occurrence.title}
+            description={occurrence.description}
+            shift={occurrence.shift}
+            location={occurrence.location.name}
+          />
+        ))
+      }
     </>
   )
-  
+
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
 
-  const res = await fetch('https://uf-security-api.herokuapp.com/occurrences')  
-  const data = await res.json()  
+  const res = await fetch('https://uf-security-api.herokuapp.com/occurrences')
+  const data = await res.json()
   /** 'data' é um uma lista de objetos json como mostrado abaixo
    
   [
@@ -47,11 +59,11 @@ export async function getServerSideProps(context) {
         para poder listar todas as ocorrências (eu usaria a função MAP, 
         pesquisa como usá-la em react)
   
-  */ 
+  */
 
   return {
     // Passa o que está entre chaves para a variável 'props' da função Home(props) 
     // lá em cima
-    props: {}, 
+    props: {data},
   }
 }

@@ -9,7 +9,7 @@ export default function Footer() {
       <div>Eliaquim dos Santos Costa</div>
       <div>Maria Ester De Carvalho Veiga</div>
       <div>Jâncy Wdson Coriolano de Aragão</div>
-      <div className="pt-5">©2022</div>
+      <div className="pt-5">©2022 UFSecurity. Todos os direitos reservados.</div>
     </footer>
   )
 }

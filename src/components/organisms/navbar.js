@@ -5,7 +5,7 @@ export default function Navbar() {
   return (
     <NavbarBootstrap bg="dark" variant="dark">
       <Container>
-        <NavbarBootstrap.Brand href="#home">          
+        <NavbarBootstrap.Brand href="#">          
             <Image src="/logo.webp"
               width="30"
               height="30"
@@ -14,7 +14,7 @@ export default function Navbar() {
             />
         </NavbarBootstrap.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="#home">Inicio</Nav.Link>          
+          <Nav.Link href="#">Inicio</Nav.Link>          
         </Nav>
       </Container>
     </NavbarBootstrap>
