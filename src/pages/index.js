@@ -1,18 +1,23 @@
 import { useEffect, useState } from 'react'
 import Occurrence from '../components/molecules/occurrence'
+import Layout from '../components/templates/layout';
 
 export default function Home(props) {
   let [occurrences, setOccurrences] = useState([])
-    
+
   useEffect(() => {
     setOccurrences(props.data)
-  },[props])
-  
+  }, [props])
+
   return (
-    <>
+    <Layout locations={props.locations}>
+      {
+        occurrences.length == 0 ? 
+        <center><b>Nenhuma ocorrência encontrada</b></center> : <></>
+      }
       {
         occurrences.map((occurrence, key) => (
-          <Occurrence            
+          <Occurrence
             key={key}
             title={occurrence.title}
             description={occurrence.description}
@@ -21,15 +26,27 @@ export default function Home(props) {
           />
         ))
       }
-    </>
+    </Layout>
   )
 
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({query}) {
 
   const res = await fetch('https://uf-security-api.herokuapp.com/occurrences')
-  const data = await res.json()
+  let auxData = await res.json()
+
+  let data = []
+  if(query.loc){
+    for(let occurrence of auxData){
+      if(occurrence.location.id == query.loc){
+        data.push(occurrence)
+      }
+    }
+  }else{
+    data = auxData
+  }
+
   /** 'data' é um uma lista de objetos json como mostrado abaixo
    
   [
@@ -60,10 +77,12 @@ export async function getServerSideProps() {
         pesquisa como usá-la em react)
   
   */
+  const resLoc = await fetch('https://uf-security-api.herokuapp.com/locations')
+  const locations = await resLoc.json()
 
   return {
     // Passa o que está entre chaves para a variável 'props' da função Home(props) 
     // lá em cima
-    props: {data},
+    props: { data, locations },
   }
 }
